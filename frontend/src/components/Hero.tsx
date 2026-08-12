@@ -20,6 +20,10 @@ const ROTATE_MS = 7000;
 // keeps the swap looking finished instead of a broken-image icon.
 const FALLBACK_TINTS = ["bg-terracotta-dark", "bg-brown", "bg-gold-dark", "bg-charcoal-light"];
 
+// Scallop trim color per slide — kept in step with FALLBACK_TINTS above so
+// the bottom edge always reads as "this card's color", not a fixed white strip.
+const TINT_TEXT_CLASSES = ["text-terracotta-dark", "text-brown", "text-gold-dark", "text-charcoal-light"];
+
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const [brokenImages, setBrokenImages] = useState<Record<number, boolean>>({});
@@ -76,10 +80,10 @@ export default function Hero() {
                 return (
                   <div
                     key={item.craft}
-                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${FALLBACK_TINTS[i % FALLBACK_TINTS.length]}`}
+                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${FALLBACK_TINTS[i % FALLBACK_TINTS.length]}`}
                     style={{
                       opacity: isActive ? 1 : 0,
-                      transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.92) rotate(-3deg)",
+                      transform: isActive ? "translateY(0)" : "translateY(28px)",
                       zIndex: isActive ? 10 : 0,
                     }}
                     aria-hidden={!isActive}
@@ -115,9 +119,10 @@ export default function Hero() {
             {/* Scalloped trim, drawn as SVG path — a recurring device used across
                 banners/section dividers instead of a generic gradient blob.
                 Shares the card's transform via the wrapper above, so it sits
-                flush against the card's edge regardless of which slide is showing. */}
+                flush against the card's edge regardless of which slide is showing.
+                Its color tracks the active slide's tint via currentColor. */}
             <svg
-              className="absolute inset-x-0 top-full h-4 w-full text-sandstone-light"
+              className={`absolute inset-x-0 top-full h-4 w-full transition-colors duration-700 ease-in-out ${TINT_TEXT_CLASSES[index % TINT_TEXT_CLASSES.length]}`}
               viewBox="0 0 400 16"
               preserveAspectRatio="none"
               aria-hidden="true"
