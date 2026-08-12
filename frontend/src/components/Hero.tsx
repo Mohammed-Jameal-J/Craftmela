@@ -1,7 +1,28 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
+const FEATURED_CRAFTS = [
+  { craft: "Blue Pottery", place: "Jaipur, Rajasthan" },
+  { craft: "Dhokra Brass Casting", place: "Odisha" },
+  { craft: "Madhubani Painting", place: "Mithila, Bihar" },
+  { craft: "Bandhani Tie-Dye", place: "Kutch, Gujarat" },
+];
+
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % FEATURED_CRAFTS.length);
+    }, 2000);
+    return () => clearInterval(id);
+  }, []);
+
+  const featured = FEATURED_CRAFTS[index];
+
   return (
     <section className="relative overflow-hidden bg-sage-dark">
       <div className="container-page grid grid-cols-1 items-center gap-10 py-16 md:grid-cols-2 md:py-24">
@@ -38,27 +59,29 @@ export default function Hero() {
         <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
           <div className="absolute inset-0 rotate-2 rounded-card bg-terracotta/90" />
           <div className="absolute inset-0 -rotate-3 translate-x-4 translate-y-3 rounded-card bg-gold/80" />
-          <div className="absolute inset-0 flex translate-x-2 -translate-y-2 rotate-1 items-center justify-center rounded-card bg-sandstone-light p-8 text-center">
-            <div>
+          <div className="absolute inset-0 flex translate-x-2 -translate-y-2 rotate-1 items-center justify-center rounded-t-card bg-sandstone-light p-8 text-center">
+            <div key={index} className="animate-fade-in">
               <p className="font-display text-lg text-sage-dark">This week&apos;s craft</p>
-              <p className="mt-1 font-display text-3xl text-charcoal">Blue Pottery</p>
-              <p className="mt-2 text-sm text-charcoal-light">Jaipur, Rajasthan</p>
+              <p className="mt-1 font-display text-3xl text-charcoal">{featured.craft}</p>
+              <p className="mt-2 text-sm text-charcoal-light">{featured.place}</p>
             </div>
-          </div>
 
-          {/* Scalloped trim, drawn as SVG path — a recurring device used across
-              banners/section dividers instead of a generic gradient blob */}
-          <svg
-            className="absolute -bottom-6 left-1/2 h-6 w-[110%] -translate-x-1/2 text-sandstone"
-            viewBox="0 0 400 24"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M0 0 Q10 24 20 0 Q30 24 40 0 Q50 24 60 0 Q70 24 80 0 Q90 24 100 0 Q110 24 120 0 Q130 24 140 0 Q150 24 160 0 Q170 24 180 0 Q190 24 200 0 Q210 24 220 0 Q230 24 240 0 Q250 24 260 0 Q270 24 280 0 Q290 24 300 0 Q310 24 320 0 Q330 24 340 0 Q350 24 360 0 Q370 24 380 0 Q390 24 400 0 L400 0 L0 0 Z"
-              fill="currentColor"
-            />
-          </svg>
+            {/* Scalloped trim, drawn as SVG path — a recurring device used across
+                banners/section dividers instead of a generic gradient blob.
+                Nested inside the front card (not the outer stack) so it shares
+                the card's transform and sits flush against its edge. */}
+            <svg
+              className="absolute inset-x-0 top-full h-4 w-full text-sandstone-light"
+              viewBox="0 0 400 16"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M0 0 Q10 16 20 0 Q30 16 40 0 Q50 16 60 0 Q70 16 80 0 Q90 16 100 0 Q110 16 120 0 Q130 16 140 0 Q150 16 160 0 Q170 16 180 0 Q190 16 200 0 Q210 16 220 0 Q230 16 240 0 Q250 16 260 0 Q270 16 280 0 Q290 16 300 0 Q310 16 320 0 Q330 16 340 0 Q350 16 360 0 Q370 16 380 0 Q390 16 400 0 L400 0 L0 0 Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </section>
