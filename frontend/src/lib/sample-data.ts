@@ -1,0 +1,115 @@
+import { Category, FestivalCollection, Product } from "@/types";
+
+// Placeholder data so the storefront renders immediately during design/dev.
+// Swap these calls for `apiFetch(...)` once the backend + Cloudinary assets are live.
+
+export const sampleCategories: Category[] = [
+  { id: "1", name: "Home Decor", slug: "home-decor" },
+  { id: "2", name: "Jewelry", slug: "jewelry" },
+  { id: "3", name: "Puja Essentials", slug: "puja-essentials" },
+  { id: "4", name: "Textiles", slug: "textiles" },
+  { id: "5", name: "Wall Art", slug: "wall-art" },
+  { id: "6", name: "Gifting", slug: "gifting" },
+];
+
+export const festivalCollections: FestivalCollection[] = [
+  {
+    title: "Diwali edit",
+    slug: "diwali",
+    tagline: "Diyas, torans & festive decor",
+    bannerImage: "/images/festival-diwali.svg",
+  },
+  {
+    title: "Wedding gifting",
+    slug: "wedding",
+    tagline: "Curated hampers for the big day",
+    bannerImage: "/images/festival-wedding.svg",
+  },
+  {
+    title: "Onam collection",
+    slug: "onam",
+    tagline: "Traditional pieces from Kerala artisans",
+    bannerImage: "/images/festival-onam.svg",
+  },
+];
+
+export const sampleProducts: Product[] = [
+  {
+    id: "p1",
+    title: "Hand-painted terracotta diya set (6 pcs)",
+    slug: "terracotta-diya-set",
+    description: "Traditional clay diyas, hand-painted by potters from Rajasthan.",
+    price: 649,
+    compare_at_price: 899,
+    stock: 24,
+    images: [],
+    rating_avg: 4.8,
+    vendor_id: "v1",
+    category_id: "3",
+  },
+  {
+    id: "p2",
+    title: "Blue pottery decorative vase",
+    slug: "blue-pottery-vase",
+    description: "Hand-thrown Jaipur blue pottery with hand-painted floral motifs.",
+    price: 1899,
+    compare_at_price: null,
+    stock: 8,
+    images: [],
+    rating_avg: 4.9,
+    vendor_id: "v2",
+    category_id: "1",
+  },
+  {
+    id: "p3",
+    title: "Dhokra brass elephant figurine",
+    slug: "dhokra-brass-elephant",
+    description: "Lost-wax cast brass figurine from Odisha's Dhokra artisan cluster.",
+    price: 1299,
+    compare_at_price: 1599,
+    stock: 15,
+    images: [],
+    rating_avg: 4.7,
+    vendor_id: "v3",
+    category_id: "1",
+  },
+  {
+    id: "p4",
+    title: "Hand-block printed cotton dupatta",
+    slug: "block-printed-dupatta",
+    description: "Bagru hand-block print on soft cotton, natural dyes.",
+    price: 899,
+    compare_at_price: null,
+    stock: 30,
+    images: [],
+    rating_avg: 4.6,
+    vendor_id: "v4",
+    category_id: "4",
+  },
+  {
+    id: "p5",
+    title: "Silver filigree jhumka earrings",
+    slug: "silver-filigree-jhumka",
+    description: "Odisha tarakasi filigree work, handcrafted in 92.5 silver.",
+    price: 2499,
+    compare_at_price: 2999,
+    stock: 6,
+    images: [],
+    rating_avg: 5.0,
+    vendor_id: "v5",
+    category_id: "2",
+  },
+  {
+    id: "p6",
+    title: "Madhubani painting — peacock motif",
+    slug: "madhubani-peacock-painting",
+    description: "Hand-painted on handmade paper by Mithila artisans.",
+    price: 3499,
+    compare_at_price: null,
+    stock: 4,
+    images: [],
+    rating_avg: 4.9,
+    vendor_id: "v6",
+    category_id: "5",
+  },
+];

@@ -1,0 +1,24 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#B5602E"/>
+  <circle cx="340" cy="50" r="70" fill="#C9A961" opacity="0.25"/>
+  <g opacity="0.9">
+    <path d="M120 220 Q140 170 160 220 Q140 235 120 220 Z" fill="#F1E9DD"/>
+    <ellipse cx="140" cy="205" rx="4" ry="14" fill="#C9A961"/>
+    <path d="M140 205 Q140 185 130 178 Q145 185 140 205" fill="#E8871E"/>
+  </g>
+  <g opacity="0.9">
+    <path d="M220 240 Q240 190 260 240 Q240 255 220 240 Z" fill="#F1E9DD"/>
+    <ellipse cx="240" cy="225" rx="4" ry="14" fill="#C9A961"/>
+    <path d="M240 225 Q240 205 230 198 Q245 205 240 225" fill="#E8871E"/>
+  </g>
+  <g opacity="0.9">
+    <path d="M60 240 Q80 200 100 240 Q80 253 60 240 Z" fill="#F1E9DD"/>
+    <ellipse cx="80" cy="228" rx="3" ry="11" fill="#C9A961"/>
+    <path d="M80 228 Q80 211 72 205 Q84 211 80 228" fill="#E8871E"/>
+  </g>
+  <g opacity="0.9">
+    <path d="M290 235 Q308 198 326 235 Q308 247 290 235 Z" fill="#F1E9DD"/>
+    <ellipse cx="308" cy="224" rx="3" ry="11" fill="#C9A961"/>
+    <path d="M308 224 Q308 208 300 202 Q312 208 308 224" fill="#E8871E"/>
+  </g>
+</svg>
