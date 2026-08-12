@@ -1,27 +1,35 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
+// Drop matching photos into /public/images with these exact filenames
+// (jpg/png/webp all fine, just keep the name) and each card will pick them up.
 const FEATURED_CRAFTS = [
-  { craft: "Blue Pottery", place: "Jaipur, Rajasthan" },
-  { craft: "Dhokra Brass Casting", place: "Odisha" },
-  { craft: "Madhubani Painting", place: "Mithila, Bihar" },
-  { craft: "Bandhani Tie-Dye", place: "Kutch, Gujarat" },
+  { craft: "Blue Pottery", place: "Jaipur, Rajasthan", image: "/images/craft-blue-pottery.jpg" },
+  { craft: "Dhokra Brass Casting", place: "Odisha", image: "/images/craft-dhokra-brass.jpg" },
+  { craft: "Madhubani Painting", place: "Mithila, Bihar", image: "/images/craft-madhubani.jpg" },
+  { craft: "Bandhani Tie-Dye", place: "Kutch, Gujarat", image: "/images/craft-bandhani.jpg" },
 ];
+
+const ROTATE_MS = 7000;
+
+// Fallback tint shown behind each photo until the real image file exists —
+// keeps the swap looking finished instead of a broken-image icon.
+const FALLBACK_TINTS = ["bg-terracotta-dark", "bg-brown", "bg-gold-dark", "bg-charcoal-light"];
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const [brokenImages, setBrokenImages] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % FEATURED_CRAFTS.length);
-    }, 2000);
+    }, ROTATE_MS);
     return () => clearInterval(id);
   }, []);
-
-  const featured = FEATURED_CRAFTS[index];
 
   return (
     <section className="relative overflow-hidden bg-sage-dark">
@@ -54,22 +62,60 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Signature element: layered craft "stall" collage, tied together by a
-            hand-drawn scalloped trim motif rather than a stock product photo grid */}
+        {/* Signature element: layered craft "stall" collage — a rotating photo
+            card (new background image + caption every 7s) tied together by a
+            hand-drawn scalloped trim motif rather than a stock product grid */}
         <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
           <div className="absolute inset-0 rotate-2 rounded-card bg-terracotta/90" />
           <div className="absolute inset-0 -rotate-3 translate-x-4 translate-y-3 rounded-card bg-gold/80" />
-          <div className="absolute inset-0 flex translate-x-2 -translate-y-2 rotate-1 items-center justify-center rounded-t-card bg-sandstone-light p-8 text-center">
-            <div key={index} className="animate-fade-in">
-              <p className="font-display text-lg text-sage-dark">This week&apos;s craft</p>
-              <p className="mt-1 font-display text-3xl text-charcoal">{featured.craft}</p>
-              <p className="mt-2 text-sm text-charcoal-light">{featured.place}</p>
+
+          <div className="absolute inset-0 translate-x-2 -translate-y-2 rotate-1">
+            <div className="relative h-full w-full overflow-hidden rounded-t-card bg-sandstone-light">
+              {FEATURED_CRAFTS.map((item, i) => {
+                const isActive = i === index;
+                return (
+                  <div
+                    key={item.craft}
+                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${FALLBACK_TINTS[i % FALLBACK_TINTS.length]}`}
+                    style={{
+                      opacity: isActive ? 1 : 0,
+                      transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.92) rotate(-3deg)",
+                      zIndex: isActive ? 10 : 0,
+                    }}
+                    aria-hidden={!isActive}
+                  >
+                    {!brokenImages[i] && (
+                      <Image
+                        src={item.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 400px, 90vw"
+                        className="object-cover"
+                        priority={i === 0}
+                        onError={() => setBrokenImages((prev) => ({ ...prev, [i]: true }))}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-charcoal/40" />
+                    <div className="absolute inset-0 flex items-center justify-center p-8 text-center">
+                      <div>
+                        <p className="font-display text-lg text-sandstone-light">
+                          This week&apos;s craft
+                        </p>
+                        <p className="mt-1 font-display text-3xl text-sandstone-light">
+                          {item.craft}
+                        </p>
+                        <p className="mt-2 text-sm text-sandstone-light/85">{item.place}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Scalloped trim, drawn as SVG path — a recurring device used across
                 banners/section dividers instead of a generic gradient blob.
-                Nested inside the front card (not the outer stack) so it shares
-                the card's transform and sits flush against its edge. */}
+                Shares the card's transform via the wrapper above, so it sits
+                flush against the card's edge regardless of which slide is showing. */}
             <svg
               className="absolute inset-x-0 top-full h-4 w-full text-sandstone-light"
               viewBox="0 0 400 16"
@@ -81,6 +127,18 @@ export default function Hero() {
                 fill="currentColor"
               />
             </svg>
+
+            {/* Slide indicators */}
+            <div className="absolute inset-x-0 bottom-6 flex items-center justify-center gap-1.5">
+              {FEATURED_CRAFTS.map((item, i) => (
+                <span
+                  key={item.craft}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === index ? "w-5 bg-sandstone-light" : "w-1.5 bg-sandstone-light/50"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -20,6 +20,7 @@ export default function HomePage() {
       />
       <ArtisanSpotlight />
       <ProductGrid
+        id="new-arrivals"
         title="New arrivals"
         products={[...sampleProducts].reverse()}
       />

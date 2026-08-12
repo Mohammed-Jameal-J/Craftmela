@@ -2,16 +2,18 @@ import { Product } from "@/types";
 import ProductCard from "./ProductCard";
 
 export default function ProductGrid({
+  id,
   title,
   subtitle,
   products,
 }: {
+  id?: string;
   title: string;
   subtitle?: string;
   products: Product[];
 }) {
   return (
-    <section className="container-page py-12">
+    <section id={id} className="container-page scroll-mt-28 py-12">
       {title && (
         <div className="mb-6">
           <h2 className="text-2xl text-charcoal sm:text-3xl">{title}</h2>
